@@ -12,7 +12,7 @@ namespace hyperAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "PR",
+                name: "PRs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,7 +22,7 @@ namespace hyperAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PR", x => x.Id);
+                    table.PrimaryKey("PK_PRs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,25 +44,25 @@ namespace hyperAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Friendship",
+                name: "Friendships",
                 columns: table => new
                 {
                     User1Id = table.Column<int>(type: "int", nullable: false),
-                    User2Id = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    User2Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Friendship", x => x.Id);
+                    table.PrimaryKey("PK_Friendships", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Friendship_Users_User1Id",
+                        name: "FK_Friendships_Users_User1Id",
                         column: x => x.User1Id,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Friendship_Users_User2Id",
+                        name: "FK_Friendships_Users_User2Id",
                         column: x => x.User2Id,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -70,7 +70,7 @@ namespace hyperAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Post",
+                name: "Posts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -83,9 +83,9 @@ namespace hyperAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Post", x => x.Id);
+                    table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Post_Users_UserId",
+                        name: "FK_Posts_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -93,7 +93,7 @@ namespace hyperAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserPR",
+                name: "UserPRs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -104,15 +104,15 @@ namespace hyperAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserPR", x => x.Id);
+                    table.PrimaryKey("PK_UserPRs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserPR_PR_PrId",
+                        name: "FK_UserPRs_PRs_PrId",
                         column: x => x.PrId,
-                        principalTable: "PR",
+                        principalTable: "PRs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserPR_Users_UserId",
+                        name: "FK_UserPRs_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -120,7 +120,7 @@ namespace hyperAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
+                name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -132,15 +132,15 @@ namespace hyperAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_Post_PostId",
+                        name: "FK_Comments_Posts_PostId",
                         column: x => x.PostId,
-                        principalTable: "Post",
+                        principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comment_Users_UserId",
+                        name: "FK_Comments_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -148,38 +148,38 @@ namespace hyperAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_PostId",
-                table: "Comment",
+                name: "IX_Comments_PostId",
+                table: "Comments",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_UserId",
-                table: "Comment",
+                name: "IX_Comments_UserId",
+                table: "Comments",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Friendship_User1Id",
-                table: "Friendship",
+                name: "IX_Friendships_User1Id",
+                table: "Friendships",
                 column: "User1Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Friendship_User2Id",
-                table: "Friendship",
+                name: "IX_Friendships_User2Id",
+                table: "Friendships",
                 column: "User2Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_UserId",
-                table: "Post",
+                name: "IX_Posts_UserId",
+                table: "Posts",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserPR_PrId",
-                table: "UserPR",
+                name: "IX_UserPRs_PrId",
+                table: "UserPRs",
                 column: "PrId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserPR_UserId",
-                table: "UserPR",
+                name: "IX_UserPRs_UserId",
+                table: "UserPRs",
                 column: "UserId");
         }
 
@@ -187,19 +187,19 @@ namespace hyperAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Friendship");
+                name: "Friendships");
 
             migrationBuilder.DropTable(
-                name: "UserPR");
+                name: "UserPRs");
 
             migrationBuilder.DropTable(
-                name: "Post");
+                name: "Posts");
 
             migrationBuilder.DropTable(
-                name: "PR");
+                name: "PRs");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -49,7 +49,7 @@ namespace hyperAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("hyperAPI.Friendship", b =>
@@ -65,8 +65,7 @@ namespace hyperAPI.Migrations
                         .HasColumnOrder(0);
 
                     b.Property<int>("User2Id")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -74,7 +73,7 @@ namespace hyperAPI.Migrations
 
                     b.HasIndex("User2Id");
 
-                    b.ToTable("Friendship");
+                    b.ToTable("Friendships");
                 });
 
             modelBuilder.Entity("hyperAPI.PR", b =>
@@ -95,7 +94,7 @@ namespace hyperAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PR");
+                    b.ToTable("PRs");
                 });
 
             modelBuilder.Entity("hyperAPI.Post", b =>
@@ -127,7 +126,7 @@ namespace hyperAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("hyperAPI.User", b =>
@@ -188,19 +187,19 @@ namespace hyperAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserPR");
+                    b.ToTable("UserPRs");
                 });
 
             modelBuilder.Entity("hyperAPI.Comment", b =>
                 {
                     b.HasOne("hyperAPI.Post", "Post")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("hyperAPI.User", "User")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -213,13 +212,13 @@ namespace hyperAPI.Migrations
             modelBuilder.Entity("hyperAPI.Friendship", b =>
                 {
                     b.HasOne("hyperAPI.User", "User1")
-                        .WithMany("Friendships1")
+                        .WithMany()
                         .HasForeignKey("User1Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("hyperAPI.User", "User2")
-                        .WithMany("Friendships2")
+                        .WithMany()
                         .HasForeignKey("User2Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -232,7 +231,7 @@ namespace hyperAPI.Migrations
             modelBuilder.Entity("hyperAPI.Post", b =>
                 {
                     b.HasOne("hyperAPI.User", "User")
-                        .WithMany("Posts")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -243,13 +242,13 @@ namespace hyperAPI.Migrations
             modelBuilder.Entity("hyperAPI.UserPR", b =>
                 {
                     b.HasOne("hyperAPI.PR", "Pr")
-                        .WithMany("UserPRs")
+                        .WithMany()
                         .HasForeignKey("PrId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("hyperAPI.User", "User")
-                        .WithMany("UserPRs")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -257,29 +256,6 @@ namespace hyperAPI.Migrations
                     b.Navigation("Pr");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("hyperAPI.PR", b =>
-                {
-                    b.Navigation("UserPRs");
-                });
-
-            modelBuilder.Entity("hyperAPI.Post", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("hyperAPI.User", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Friendships1");
-
-                    b.Navigation("Friendships2");
-
-                    b.Navigation("Posts");
-
-                    b.Navigation("UserPRs");
                 });
 #pragma warning restore 612, 618
         }

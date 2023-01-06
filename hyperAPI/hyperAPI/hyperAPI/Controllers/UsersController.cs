@@ -23,29 +23,34 @@ namespace hyperAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            var hero = await _context.Users.FindAsync(id);
-            if (hero == null)
-                return BadRequest("Hero not found.");
-            return Ok(hero);
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return BadRequest("User not found.");
+            return Ok(user);
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<User>>> AddHero(User hero)
+        public async Task<ActionResult<List<User>>> AddUser(User user)
         {
-            _context.Users.Add(hero);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             return Ok(await _context.Users.ToListAsync());
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<User>>> UpdateHero(User request)
+        public async Task<ActionResult<List<User>>> UpdateUser(User request)
         {
-            var dbHero = await _context.Users.FindAsync(request.Id);
-            if (dbHero == null)
-                return BadRequest("Hero not found.");
+            var dbUser = await _context.Users.FindAsync(request.Id);
+            if (dbUser == null)
+                return BadRequest("User not found.");
 
-            dbHero.Username = request.Username;
+            dbUser.Username = request.Username;
+            dbUser.Email = request.Email;
+            dbUser.Password = request.Password;
+            dbUser.Height = request.Height;
+            dbUser.Weight = request.Weight;
+            dbUser.Picture = request.Picture;
  
 
             await _context.SaveChangesAsync();
@@ -56,11 +61,11 @@ namespace hyperAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<User>>> Delete(int id)
         {
-            var dbHero = await _context.Users.FindAsync(id);
-            if (dbHero == null)
-                return BadRequest("Hero not found.");
+            var dbUser = await _context.Users.FindAsync(id);
+            if (dbUser == null)
+                return BadRequest("User not found.");
 
-            _context.Users.Remove(dbHero);
+            _context.Users.Remove(dbUser);
             await _context.SaveChangesAsync();
 
             return Ok(await _context.Users.ToListAsync());
