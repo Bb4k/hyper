@@ -18,5 +18,7 @@ namespace hyperAPI
 
         [Required]
         public int User2Id { get; set; }
+
+        public int Status { get; set; }
     }
 }

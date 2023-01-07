@@ -60,6 +60,9 @@ namespace hyperAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("User1Id")
                         .HasColumnType("int")
                         .HasColumnOrder(0);

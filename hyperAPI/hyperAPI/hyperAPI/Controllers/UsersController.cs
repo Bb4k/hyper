@@ -3,7 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace hyperAPI.Controllers
 {
-    [Route("api/[controller]")]
+    public class LoginData
+    {
+        public string username;
+        public string password;
+    }
+
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -14,13 +19,21 @@ namespace hyperAPI.Controllers
             _context = context;
         }
 
+        /*
+        List Users
+        */
         [HttpGet]
+        [Route("/users")]
         public async Task<ActionResult<List<User>>> Get()
         {
             return Ok(await _context.Users.ToListAsync());
         }
 
-        [HttpGet("{id}")]
+        /*
+        List User by id
+        */
+        [HttpGet]
+        [Route("/user/{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -29,7 +42,11 @@ namespace hyperAPI.Controllers
             return Ok(user);
         }
 
+        /*
+        Register User
+        */
         [HttpPost]
+        [Route("/register")]
         public async Task<ActionResult<List<User>>> AddUser(User user)
         {
             _context.Users.Add(user);
@@ -38,27 +55,44 @@ namespace hyperAPI.Controllers
             return Ok(await _context.Users.ToListAsync());
         }
 
+        /*
+        Update User
+        */
+
         [HttpPut]
+        [Route("/update-user")]
         public async Task<ActionResult<List<User>>> UpdateUser(User request)
         {
             var dbUser = await _context.Users.FindAsync(request.Id);
             if (dbUser == null)
                 return BadRequest("User not found.");
-
-            dbUser.Username = request.Username;
-            dbUser.Email = request.Email;
-            dbUser.Password = request.Password;
-            dbUser.Height = request.Height;
-            dbUser.Weight = request.Weight;
-            dbUser.Picture = request.Picture;
- 
+            if (request.Email != dbUser.Email)
+            {
+                dbUser.Email = request.Email;
+            }            
+            if (request.Height != request.Height)
+            {
+                dbUser.Height = request.Height;
+            }            
+            if (request.Weight != request.Weight)
+            {
+                dbUser.Weight = request.Weight;
+            }            
+            if (request.Picture != request.Picture)
+            {
+                dbUser.Picture = request.Picture;
+            }
 
             await _context.SaveChangesAsync();
 
             return Ok(await _context.Users.ToListAsync());
         }
 
-        [HttpDelete("{id}")]
+        /*
+        Delete User
+        */
+        [HttpDelete]
+        [Route("/delete-user/{id}")]
         public async Task<ActionResult<List<User>>> Delete(int id)
         {
             var dbUser = await _context.Users.FindAsync(id);
@@ -69,6 +103,26 @@ namespace hyperAPI.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(await _context.Users.ToListAsync());
+        }
+
+        /*
+        Login User
+        */
+        [HttpPost]
+        [Route("/login")]
+        public async Task<ActionResult<string>> LoginUser(User loginData)
+        {
+            var dbUser = await _context.Users.Where(u => u.Username == loginData.Username).FirstOrDefaultAsync();
+            if (dbUser == null)
+                return BadRequest("User not found.");
+
+            if (loginData.Password != dbUser.Password)
+            {
+                return BadRequest("Invalid password.");
+            }
+
+            return Ok("User connected!");
+
         }
     }
 }

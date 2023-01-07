@@ -12,7 +12,7 @@ using hyperAPI.Data;
 namespace hyperAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230106233421_addTables")]
+    [Migration("20230107011616_addTables")]
     partial class addTables
     {
         /// <inheritdoc />
@@ -62,6 +62,9 @@ namespace hyperAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("User1Id")
                         .HasColumnType("int")

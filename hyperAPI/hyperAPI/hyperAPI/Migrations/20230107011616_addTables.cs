@@ -50,7 +50,8 @@ namespace hyperAPI.Migrations
                     User1Id = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    User2Id = table.Column<int>(type: "int", nullable: false)
+                    User2Id = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
