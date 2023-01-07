@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace hyperAPI.Controllers
 {
@@ -105,7 +107,7 @@ namespace hyperAPI.Controllers
         */
         [HttpPost]
         [Route("/login")]
-        public async Task<ActionResult<string>> LoginUser(User loginData)
+        public async Task<ActionResult<User>> LoginUser(User loginData)
         {
             var dbUser = await _context.Users.Where(u => u.Username == loginData.Username).FirstOrDefaultAsync();
             if (dbUser == null)
@@ -116,8 +118,26 @@ namespace hyperAPI.Controllers
                 return BadRequest("Invalid password.");
             }
 
-            return Ok("User connected!");
+            return Ok(dbUser);
 
+        }
+
+        /*
+        Profile User
+        */
+        [HttpGet]
+        [Route("/user-profile/{id}")]
+        public async Task<ActionResult<User>> GetProfile(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return BadRequest("User not found.");
+            var posts = await _context.Posts.Where(u => u.UserId == id).ToListAsync();
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine(JsonSerializer.Serialize(user));
+            Console.WriteLine(JsonSerializer.Serialize(posts));
+            Console.WriteLine("----------------------------------------------------------------");
+            return Ok(user);
         }
     }
 }
