@@ -36,5 +36,26 @@ namespace hyperAPI.Controllers
             return Ok(await _context.Posts.ToListAsync());
         }
 
+        /*
+        Hype post
+        */
+        [HttpPost]
+        [Route("/hype")]
+        public async Task<ActionResult<string>> Hype(dynamic obj)
+        {
+            Console.WriteLine(JsonSerializer.Serialize(obj));
+            var post = await _context.Posts.FindAsync(obj.post);
+            if (post == null)
+                return BadRequest("Post not found.");
+
+            if (obj.hype != null)
+            {
+                post.Likes += obj.hype;
+            }
+            return Ok("Hyped!");
+        }
+
+
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace hyperAPI.Controllers
@@ -67,15 +68,15 @@ namespace hyperAPI.Controllers
             {
                 dbUser.Email = request.Email;
             }            
-            if (request.Height != request.Height)
+            if (request.Height != dbUser.Height)
             {
                 dbUser.Height = request.Height;
             }            
-            if (request.Weight != request.Weight)
+            if (request.Weight != dbUser.Weight)
             {
                 dbUser.Weight = request.Weight;
             }            
-            if (request.Picture != request.Picture)
+            if (request.Picture != dbUser.Picture)
             {
                 dbUser.Picture = request.Picture;
             }
@@ -127,17 +128,21 @@ namespace hyperAPI.Controllers
         */
         [HttpGet]
         [Route("/user-profile/{id}")]
-        public async Task<ActionResult<User>> GetProfile(int id)
+        public async Task<ActionResult<Object>> GetProfile(int id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
                 return BadRequest("User not found.");
             var posts = await _context.Posts.Where(u => u.UserId == id).ToListAsync();
-            Console.WriteLine("----------------------------------------------------------------");
-            Console.WriteLine(JsonSerializer.Serialize(user));
-            Console.WriteLine(JsonSerializer.Serialize(posts));
-            Console.WriteLine("----------------------------------------------------------------");
-            return Ok(user);
+            var usersPr = await _context.UserPRs.Where(u => u.UserId == id).ToListAsync();
+
+            var result = new Dictionary<string, Object>(){
+                {"user", user},
+                {"posts", posts},
+                {"usersPr", usersPr}
+            };
+
+            return Ok(result);
         }
     }
 }

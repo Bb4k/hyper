@@ -27,5 +27,18 @@ namespace hyperAPI.Controllers
             return Ok(await _context.PRs.ToListAsync());
         }
 
+        /*
+        List PR by id
+        */
+        [HttpGet]
+        [Route("/pr/{id}")]
+        public async Task<ActionResult<PR>> Get(int id)
+        {
+            var pr = await _context.PRs.FindAsync(id);
+            if (pr == null)
+                return BadRequest("PR not found.");
+            return Ok(pr);
+        }
+
     }
 }

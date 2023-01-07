@@ -9,14 +9,10 @@ namespace hyperAPI
         public int Id { get; set; }
 
         [ForeignKey("PostId")]
-        public Post Post { get; set; }
-
         [Required]
         public int PostId { get; set; }
 
         [ForeignKey("UserId")]
-        public User User { get; set; }
-
         [Required]
         public int UserId { get; set; }
 
