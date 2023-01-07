@@ -5,16 +5,17 @@
 - [x] GET: users
 - [x] GET: user by id
 - [ ] GET: feed
-- [ ] GET: profile + postari + PRs
+- [ ] GET: profile + postari + UserPRs
 - [ ] GET: comentariile unei postari + profile_pic/username
 - [ ] GET: friend requests (poza, username)
-- [ ] GET: search friend by username
+- [ ] GET: search friend by username (return name, picture, are_friends)
 
 - [x] POST: register (picture, email, username, password, height, weight)
 - [x] POST: login (username, password)
 - [ ] POST: send friend request (add to tabel "prietenie")
-- [ ] POST: postare
+- [x] POST: postare 
 - [ ] POST: comentariu
+- [ ] POST: PR (hardcoded in db, useless for frontend)
 - [ ] PUT/POST: accept/reject
 
 - [x] PUT: update user (picture, email, weight, height)
@@ -22,6 +23,8 @@
 
 - [x] DELETE: user delete by id
 - [ ] DELETE: comentariu
+
+- [ ] Populate database script
 
 
 
