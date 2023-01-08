@@ -56,7 +56,7 @@ namespace hyperAPI.Controllers
             if (comments == null)
                 return Ok("No comments for this post");
 
-            List<Object> result = new List<Object>(); ;
+            List<Object> result = new List<Object>();
 
             foreach (var comment in comments)
             {

@@ -185,18 +185,41 @@ namespace hyperAPI.Controllers
             if (user == null)
                 return BadRequest("User not found.");
 
-            var posts = await _context.Posts.Where(u => u.UserId == id).ToListAsync();
-            var usersPr = await _context.UserPRs.Where(u => u.UserId == id).ToListAsync();
+            // get all friendships for current user
             var friendships = await _context.Friendships.Where(u => (u.User2Id == id || u.User1Id == id) && u.Status == 1).ToListAsync();
 
-            var result = new Dictionary<string, Object>(){
-                {"user", user},
-                {"posts", posts},
-                {"usersPr", usersPr},
-                {"friends", friendships.Count}
-            };
+            // create feed
+            List<Object> feed = new List<Object>();
 
-            return Ok(result);
+            // get all the posts from friends
+            foreach (var friendship in friendships)
+            {
+                var friendId = friendship.User2Id; ;
+                if (friendship.User1Id != id)
+                    friendId = friendship.User1Id;
+                
+                var friend = await _context.Users.FindAsync(friendId);
+                if (friend == null)
+                    return BadRequest("Friend not found.");
+
+                var posts = await _context.Posts.Where(u => u.UserId == friendId).ToListAsync();
+
+                foreach (var post in posts) {
+
+                    var dataForPost = new Dictionary<string, Object>(){
+                        {"user", friend},
+                        {"post", post}
+                    };
+                    feed.Add(dataForPost);
+                }
+            }
+
+            feed.Sort(delegate(dynamic x, dynamic y)
+            {
+                return y["post"].Timestamp.CompareTo(x["post"].Timestamp);
+            });
+
+            return Ok(feed);
         }
 
     }

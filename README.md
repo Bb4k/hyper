@@ -4,7 +4,7 @@
 
 - [x] GET: users
 - [x] GET: user by id
-- [ ] GET: feed (postare + nr comentarii + nr hypes)
+- [x] GET: feed (postare + nr comentarii + nr hypes)
 - [x] GET: profile + postari + UserPRs + count_friends
 - [x] GET: pr by id
 - [x] GET: comentariile unei postari + profile_pic/username
