@@ -41,6 +41,33 @@ namespace hyperAPI.Controllers
         }
 
         /*
+        Find user by username
+        */
+        [HttpGet]
+        [Route("/user/{current_user_id}/{username_to_find}")]
+        public async Task<ActionResult<Object>> GetUserByUsername(int current_user_id, string username_to_find)
+        {
+            var dbUser = await _context.Users.Where(u => u.Username == username_to_find).FirstOrDefaultAsync();
+
+            if (dbUser == null)
+                return BadRequest("Current user not found.");
+
+            var dbFriendship = await _context.Friendships.Where(u => (u.User1Id == current_user_id && u.User2Id == dbUser.Id) ||
+                                                                    (u.User1Id == dbUser.Id && u.User2Id == current_user_id)).FirstOrDefaultAsync();
+
+            var are_friends = false;
+            if (dbFriendship != null)
+                are_friends = true;
+
+            var obj = new Dictionary<string, Object>(){
+                {"user", dbUser},
+                {"are_friends", are_friends}
+            };
+
+            return Ok(obj);
+        }
+
+        /*
         Register User
         */
         [HttpPost]
@@ -135,11 +162,13 @@ namespace hyperAPI.Controllers
                 return BadRequest("User not found.");
             var posts = await _context.Posts.Where(u => u.UserId == id).ToListAsync();
             var usersPr = await _context.UserPRs.Where(u => u.UserId == id).ToListAsync();
+            var friendships = await _context.Friendships.Where(u => (u.User2Id == id || u.User1Id == id) && u.Status == 1).ToListAsync();
 
             var result = new Dictionary<string, Object>(){
                 {"user", user},
                 {"posts", posts},
-                {"usersPr", usersPr}
+                {"usersPr", usersPr},
+                {"friends", friendships.Count}
             };
 
             return Ok(result);

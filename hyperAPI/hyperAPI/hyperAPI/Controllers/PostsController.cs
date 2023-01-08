@@ -27,9 +27,6 @@ namespace hyperAPI.Controllers
             userPR.PrId = post.PrId;
             userPR.UserId = post.UserId;
             userPR.Weight = post.Weight;
-            /*Console.WriteLine("----------------------------------------------------------------");
-            Console.WriteLine(JsonSerializer.Serialize(userPR));
-            Console.WriteLine("----------------------------------------------------------------");*/
             _context.UserPRs.Add(userPR);
             await _context.SaveChangesAsync();
 
@@ -40,19 +37,38 @@ namespace hyperAPI.Controllers
         Hype post
         */
         [HttpPost]
-        [Route("/hype")]
-        public async Task<ActionResult<string>> Hype(dynamic obj)
+        [Route("/hype/{postId}")]
+        public async Task<ActionResult<List<Post>>> Hype(int postId)
         {
-            Console.WriteLine(JsonSerializer.Serialize(obj));
-            var post = await _context.Posts.FindAsync(obj.post);
+            
+            var post = await _context.Posts.FindAsync(postId);
             if (post == null)
                 return BadRequest("Post not found.");
 
-            if (obj.hype != null)
+            post.Likes += 1;
+           
+            await _context.SaveChangesAsync();
+            return Ok(await _context.Posts.FindAsync(postId));
+        }
+
+        /*
+        Unhype post
+        */
+        [HttpPost]
+        [Route("/unhype/{postId}")]
+        public async Task<ActionResult<List<Post>>> Unhype(int postId)
+        {
+
+            var post = await _context.Posts.FindAsync(postId);
+            if (post == null)
+                return BadRequest("Post not found.");
+
+            if (post.Likes > 1)
             {
-                post.Likes += obj.hype;
+                post.Likes -= 1;
             }
-            return Ok("Hyped!");
+            await _context.SaveChangesAsync();
+            return Ok(await _context.Posts.FindAsync(postId));
         }
 
 
