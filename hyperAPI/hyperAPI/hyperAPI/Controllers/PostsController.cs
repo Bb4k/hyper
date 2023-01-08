@@ -23,7 +23,8 @@ namespace hyperAPI.Controllers
         public async Task<ActionResult<List<Post>>> AddPost(Post post)
         {
             _context.Posts.Add(post);
-            UserPR userPR =  new UserPR();
+            await _context.SaveChangesAsync();
+            UserPR userPR = new UserPR();
             userPR.PrId = post.PrId;
             userPR.UserId = post.UserId;
             userPR.Weight = post.Weight;
