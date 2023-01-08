@@ -173,5 +173,31 @@ namespace hyperAPI.Controllers
 
             return Ok(result);
         }
+
+        /*
+        Feed User
+        */
+        [HttpGet]
+        [Route("/user-feed/{id}")]
+        public async Task<ActionResult<Object>> GetFeed(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return BadRequest("User not found.");
+
+            var posts = await _context.Posts.Where(u => u.UserId == id).ToListAsync();
+            var usersPr = await _context.UserPRs.Where(u => u.UserId == id).ToListAsync();
+            var friendships = await _context.Friendships.Where(u => (u.User2Id == id || u.User1Id == id) && u.Status == 1).ToListAsync();
+
+            var result = new Dictionary<string, Object>(){
+                {"user", user},
+                {"posts", posts},
+                {"usersPr", usersPr},
+                {"friends", friendships.Count}
+            };
+
+            return Ok(result);
+        }
+
     }
 }

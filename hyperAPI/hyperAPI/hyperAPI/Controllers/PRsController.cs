@@ -40,5 +40,15 @@ namespace hyperAPI.Controllers
             return Ok(pr);
         }
 
+        /*
+        List PRs
+        */
+        [HttpGet]
+        [Route("/prs")]
+        public async Task<ActionResult<List<PR>>> GetPrs()
+        {
+            return Ok(await _context.PRs.ToListAsync());
+        }
+
     }
 }
