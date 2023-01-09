@@ -206,9 +206,11 @@ namespace hyperAPI.Controllers
 
                 foreach (var post in posts) {
 
+                    var comments = await _context.Comments.Where(u => u.PostId == post.Id).ToListAsync();
                     var dataForPost = new Dictionary<string, Object>(){
                         {"user", friend},
-                        {"post", post}
+                        {"post", post},
+                        {"comments", comments.Count}
                     };
                     feed.Add(dataForPost);
                 }

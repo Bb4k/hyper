@@ -120,6 +120,7 @@ while True:
         IP_ADDRESS_LOCALHOST = "192.168.0.111:8000"
 
     # populate_users()
-    populate_prs()
+    # populate_prs()
+    populate_posts()
 
     break
