@@ -72,6 +72,16 @@ namespace hyperAPI.Controllers
             return Ok(await _context.Posts.FindAsync(postId));
         }
 
+        /*
+        List posts
+        */
+        [HttpGet]
+        [Route("/posts")]
+        public async Task<ActionResult<List<Post>>> ListPosts()
+        {
+            return Ok(await _context.Posts.ToListAsync());
+        }
+
 
 
     }

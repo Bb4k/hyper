@@ -10,15 +10,8 @@ namespace hyperAPI
         [ForeignKey("UserId")]
         [Required]
         public int UserId { get; set; }
-
-        [Required]
-        [NotMapped]
         public double Weight { get; set; }
-
-        [Required]
-        [NotMapped]
         public int PrId { get; set; }
-
         public string Media { get; set; }
         public string Title { get; set; }
         public int Likes { get; set; } = 0;

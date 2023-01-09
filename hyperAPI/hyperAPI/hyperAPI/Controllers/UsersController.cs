@@ -47,24 +47,29 @@ namespace hyperAPI.Controllers
         [Route("/user/{current_user_id}/{username_to_find}")]
         public async Task<ActionResult<Object>> GetUserByUsername(int current_user_id, string username_to_find)
         {
-            var dbUser = await _context.Users.Where(u => u.Username == username_to_find).FirstOrDefaultAsync();
+            var usersFromDb = await _context.Users.Where(u => u.Username.StartsWith(username_to_find)).ToListAsync();
 
-            if (dbUser == null)
-                return BadRequest("Current user not found.");
+            List<Object> suggestedUsers = new List<Object>();
 
-            var dbFriendship = await _context.Friendships.Where(u => (u.User1Id == current_user_id && u.User2Id == dbUser.Id) ||
-                                                                    (u.User1Id == dbUser.Id && u.User2Id == current_user_id)).FirstOrDefaultAsync();
+            foreach (var user in usersFromDb)
+            {
 
-            var are_friends = false;
-            if (dbFriendship != null)
-                are_friends = true;
+                var dbFriendship = await _context.Friendships.Where(u => (u.User1Id == current_user_id && u.User2Id == user.Id) ||
+                                                                        (u.User1Id == user.Id && u.User2Id == current_user_id)).FirstOrDefaultAsync();
 
-            var obj = new Dictionary<string, Object>(){
-                {"user", dbUser},
-                {"are_friends", are_friends}
-            };
+                var are_friends = false;
+                if (dbFriendship != null)
+                    are_friends = true;
 
-            return Ok(obj);
+                var obj = new Dictionary<string, Object>(){
+                    {"user", user},
+                    {"are_friends", are_friends}
+                };
+                suggestedUsers.Add(obj);
+            }
+
+
+            return Ok(suggestedUsers);
         }
 
         /*
