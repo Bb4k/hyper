@@ -55,7 +55,7 @@ namespace hyperAPI.Controllers
             {
 
                 var dbFriendship = await _context.Friendships.Where(u => (u.User1Id == current_user_id && u.User2Id == user.Id) ||
-                                                                        (u.User1Id == user.Id && u.User2Id == current_user_id)).FirstOrDefaultAsync();
+                                                                        (u.User1Id == user.Id && u.User2Id == current_user_id) && u.Status == 1).FirstOrDefaultAsync();
 
                 var are_friends = false;
                 if (dbFriendship != null)
