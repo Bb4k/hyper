@@ -217,31 +217,36 @@ def populate_comments():
             "postId": 1,
             "userId": 2,
             "text": "Congratz man! Keep up the good work!",
-            "status": 1
+            "status": 1,
+            "authorPostId": 1
         },
         {
             "postId": 2,
             "userId": 2,
             "text": "Great job! You dont miss",
-            "status": 0
+            "status": 0,
+            "authorPostId": 1
         },
         {
             "postId": 3,
             "userId": 1,
             "text": "Yaaa body! LIGHTWEIGHT!!!",
-            "status": 1
+            "status": 1,
+            "authorPostId": 2
         },
         {
-            "postId": 3,
-            "userId": 1,
+            "postId": 4,
+            "userId": 2,
             "text": "LOOKING GOOD!",
-            "status": 0
+            "status": 0,
+            "authorPostId": 3
         },
         {
             "postId": 5,
             "userId": 3,
             "text": "Looking big king <3",
-            "status": 1
+            "status": 1,
+            "authorPostId": 2
         }
     ]
     for comment in comments:

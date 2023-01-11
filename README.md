@@ -32,14 +32,16 @@
 - [x] DELETE: reject friend
 - [x] DELETE: posts
 
+### Side tasks
 - [x] adaugat roluri la users (admin, registered, guest)
 - [x] adaugat public/private profile users (private: 0/1)
 - [x] edit api edit profile public/private
 - [x] modificat api user profile sa zica daca sunt prieteni deja sau nu (are_friends: 0 - no, 1 - yes, 2 - pending)
 - [x] crearea conturi admin + guest
 - [x] status de accepted la comentarii
-- [ ] modificat API de get comments sa arate doar alea accepted - Robert in front???
-- [ ] de adaugat si comentariile in pending la API ul de cerere de prietenie
+- [x] de adaugat ID-ul autorului postarii la add-comment
+- [x] de adaugat si comentariile in pending la API ul de cerere de prietenie
+- [x] accept comment API
 - [ ] de adaugat si warnings la API ul de cerere de prietenie
 - [ ] de vazut cu mai multe poze per postare
 - [ ] inbox pentru mesaje

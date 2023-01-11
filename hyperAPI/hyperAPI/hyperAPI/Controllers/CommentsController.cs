@@ -80,6 +80,21 @@ namespace hyperAPI.Controllers
             return Ok(result);
         }
 
+        /*
+        Accept Comment
+        */
+        [HttpPut]
+        [Route("/accept-comment/{id}")]
+        public async Task<ActionResult<string>> AcceptComment(int id)
+        {
+            var dbComment = await _context.Comments.FindAsync(id);
+            if (dbComment == null)
+                return BadRequest("Comment not found.");
+
+            dbComment.Status = 1;
+            await _context.SaveChangesAsync();
+            return Ok("Comment accepted");
+        }
 
 
     }

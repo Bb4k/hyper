@@ -17,44 +17,71 @@ namespace hyperAPI.Controllers
         List frindships
         */
         [HttpGet]
-        [Route("/frindships")]
+        [Route("/friendships")]
         public async Task<ActionResult<List<Friendship>>> Get()
         {
             return Ok(await _context.Friendships.ToListAsync());
         }
 
         /*
-        List friend request for user
+        List friend request, comments request and warnigs for user
         */
         [HttpGet]
-        [Route("/frind-requests/{id}")]
+        [Route("/user-requests/{id}")]
         public async Task<ActionResult<List<Friendship>>> GetFriendRequest(int id)
         {
             var dbFriendrequests = await _context.Friendships.Where(u => (u.User2Id == id) && u.Status == 0).ToListAsync();
 
-            List<Object> result = new List<Object>(); ;
+            List<Object> friendRequests = new List<Object>();
 
-            foreach (var friendrequest in dbFriendrequests)
+            foreach (var friendRequest in dbFriendrequests)
             {
-                var user = await _context.Users.FindAsync(friendrequest.User1Id);
+                var user = await _context.Users.FindAsync(friendRequest.User1Id);
                 if (user == null)
-                    return BadRequest("User not found.");
+                    return BadRequest("User not found at friend request.");
 
                 var obj = new Dictionary<string, Object>(){
-                    {"friendrequest", friendrequest},
+                    {"friendrequest", friendRequest},
                     {"user", user}
                 };
-                result.Add(obj);
+                friendRequests.Add(obj);
 
             }
 
+            var dbComments = await _context.Comments.Where(u => (u.AuthorPostId == id) && u.Status == 0).ToListAsync();
+
+            List<Object> commentsRequests = new List<Object>();
+
+            foreach (var comment in dbComments)
+            {
+                var user = await _context.Users.FindAsync(comment.UserId);
+                if (user == null)
+                    return BadRequest("User not found at comments requests.");
+
+                var obj = new Dictionary<string, Object>(){
+                    {"comment", comment},
+                    {"user", user}
+                };
+                commentsRequests.Add(obj);
+
+            }
+
+            commentsRequests.Sort(delegate (dynamic x, dynamic y)
+            {
+                return y["comment"].Timestamp.CompareTo(x["comment"].Timestamp);
+            });
+
+
+            List<Object> warnings = new List<Object>();
+
             var final = new Dictionary<string, Object>(){
-                {"result", result}
+                {"friendships", friendRequests},
+                {"comments", commentsRequests},
+                {"warnings", warnings}
             };
 
             return Ok(final);
         }
-
 
         /*
         Send friend request
@@ -69,7 +96,6 @@ namespace hyperAPI.Controllers
 
             return Ok(await _context.Friendships.ToListAsync());
         }
-
 
         /*
         Accept friend request

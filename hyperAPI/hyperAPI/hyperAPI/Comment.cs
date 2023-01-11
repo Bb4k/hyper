@@ -15,7 +15,7 @@ namespace hyperAPI
         [ForeignKey("UserId")]
         [Required]
         public int UserId { get; set; }
-
+        public int AuthorPostId { get; set; }
         public string Text { get; set; }
 
         // 0 - pending, 1 - accepted
