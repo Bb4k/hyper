@@ -37,8 +37,8 @@
 - [x] edit api edit profile public/private
 - [x] modificat api user profile sa zica daca sunt prieteni deja sau nu (are_friends: 0 - no, 1 - yes, 2 - pending)
 - [x] crearea conturi admin + guest
-- [ ] status de accepted la comentarii
-- [ ] modificat API de get comments sa arate doar alea accepted
+- [x] status de accepted la comentarii
+- [ ] modificat API de get comments sa arate doar alea accepted - Robert in front???
 - [ ] de adaugat si comentariile in pending la API ul de cerere de prietenie
 - [ ] de adaugat si warnings la API ul de cerere de prietenie
 - [ ] de vazut cu mai multe poze per postare
