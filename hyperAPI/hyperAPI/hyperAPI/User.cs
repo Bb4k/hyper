@@ -11,5 +11,7 @@ namespace hyperAPI
         public double Height { get; set; } 
         public double Weight { get; set; }
         public string Picture { get; set; }
+        public string Role { get; set; }
+        public int Private { get; set; }
     }
 }

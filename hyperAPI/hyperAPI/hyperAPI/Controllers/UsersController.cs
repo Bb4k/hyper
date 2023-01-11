@@ -112,6 +112,10 @@ namespace hyperAPI.Controllers
             {
                 dbUser.Picture = request.Picture;
             }
+            if (request.Private != dbUser.Private)
+            {
+                dbUser.Private = request.Private;
+            }
 
             await _context.SaveChangesAsync();
 
@@ -159,21 +163,33 @@ namespace hyperAPI.Controllers
         Profile User
         */
         [HttpGet]
-        [Route("/user-profile/{id}")]
-        public async Task<ActionResult<Object>> GetProfile(int id)
+        [Route("/user-profile/{current_user}/{user_to_view}")]
+        public async Task<ActionResult<Object>> GetProfile(int current_user, int user_to_view)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(user_to_view);
             if (user == null)
                 return BadRequest("User not found.");
-            var posts = await _context.Posts.Where(u => u.UserId == id).ToListAsync();
-            var usersPr = await _context.UserPRs.Where(u => u.UserId == id).ToListAsync();
-            var friendships = await _context.Friendships.Where(u => (u.User2Id == id || u.User1Id == id) && u.Status == 1).ToListAsync();
+            var posts = await _context.Posts.Where(u => u.UserId == user_to_view).ToListAsync();
+            var usersPr = await _context.UserPRs.Where(u => u.UserId == user_to_view).ToListAsync();
+            var friendships = await _context.Friendships.Where(u => (u.User2Id == user_to_view || u.User1Id == user_to_view) && u.Status == 1).ToListAsync();
+            var currentFriendship = await _context.Friendships.Where(u => (u.User1Id == current_user && u.User2Id == user_to_view) ||
+                                                         (u.User1Id == user_to_view && u.User2Id == current_user)).FirstOrDefaultAsync();
+            var areFriends = 1; // are friends
+            if (currentFriendship == null)
+            {
+                areFriends = 0; // no friendship
+            }
+            else if (currentFriendship.Status == 0)
+            {
+                areFriends = 2; // pending friendship
+            }
 
             var result = new Dictionary<string, Object>(){
                 {"user", user},
                 {"posts", posts},
                 {"usersPr", usersPr},
-                {"friends", friendships.Count}
+                {"friends", friendships.Count},
+                {"are_friends", areFriends }
             };
 
             return Ok(result);

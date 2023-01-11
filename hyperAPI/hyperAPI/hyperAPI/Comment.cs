@@ -17,6 +17,9 @@ namespace hyperAPI
         public int UserId { get; set; }
 
         public string Text { get; set; }
+
+        // 0 - pending, 1 - accepted
+        public int Status { get; set; }
         public DateTime Timestamp { get; set; }
         public Comment()
         {

@@ -82,7 +82,22 @@ namespace hyperAPI.Controllers
             return Ok(await _context.Posts.ToListAsync());
         }
 
+        /*
+        Delete post
+        */
+        [HttpDelete]
+        [Route("/delete-post/{id}")]
+        public async Task<ActionResult<string>> Delete(int id)
+        {
+            var dbPost = await _context.Posts.FindAsync(id);
+            if (dbPost == null)
+                return BadRequest("User not found.");
 
+            _context.Posts.Remove(dbPost);
+            await _context.SaveChangesAsync();
+
+            return Ok("Post deleted");
+        }
 
     }
 }

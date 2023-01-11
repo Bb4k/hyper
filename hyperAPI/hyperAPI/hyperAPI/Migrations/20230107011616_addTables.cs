@@ -36,7 +36,9 @@ namespace hyperAPI.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Height = table.Column<double>(type: "float", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
-                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Private = table.Column<string>(type: "int", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -131,7 +133,9 @@ namespace hyperAPI.Migrations
                     PostId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+
                 },
                 constraints: table =>
                 {
