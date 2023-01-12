@@ -108,7 +108,7 @@ namespace hyperAPI.Controllers
             {
                 dbUser.Weight = request.Weight;
             }            
-            if (request.Picture != dbUser.Picture)
+            if (request.Picture != dbUser.Picture && request.Picture != "")
             {
                 dbUser.Picture = request.Picture;
             }
