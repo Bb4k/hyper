@@ -82,7 +82,7 @@ namespace hyperAPI.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Users.ToListAsync());
+            return Ok(user);
         }
 
         /*
