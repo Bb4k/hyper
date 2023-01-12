@@ -71,8 +71,36 @@ namespace hyperAPI.Controllers
                 return y["comment"].Timestamp.CompareTo(x["comment"].Timestamp);
             });
 
+            var dbWarnings = await _context.Warnings.Where(u => (u.UserId == id)).ToListAsync();
 
             List<Object> warnings = new List<Object>();
+
+            foreach (var warning in dbWarnings)
+            {
+                var user = await _context.Users.FindAsync(warning.UserId);
+                if (user == null)
+                    return BadRequest("User not found at warnings.");
+
+                var post = await _context.Posts.FindAsync(warning.PostId);
+                if (post == null)
+                    return BadRequest("Post not found at warnings.");
+
+                if (warning.CommentId != 0)
+                {
+                    var comment = await _context.Comments.FindAsync(warning.CommentId);
+                    if (comment == null)
+                        return BadRequest("Comment not found at warnings.");
+                }
+
+                var obj = new Dictionary<string, Object>(){
+                    {"id", warning.Id},
+                    {"comment", warning},
+                    {"user", user},
+                    {"post", post}
+                };
+                warnings.Add(obj);
+
+            }
 
             var final = new Dictionary<string, Object>(){
                 {"friendships", friendRequests},

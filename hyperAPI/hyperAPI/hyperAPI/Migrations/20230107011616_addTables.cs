@@ -81,7 +81,9 @@ namespace hyperAPI.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     PrId = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
-                    Media = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Media1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Media2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Media3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Likes = table.Column<int>(type: "int", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -155,6 +157,33 @@ namespace hyperAPI.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Warnings",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostId = table.Column<int>(type: "int", nullable: false),
+                    CommentId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Warnings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Warnings_Users_User1Id",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Warnings_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",
                 table: "Comments",
@@ -189,6 +218,16 @@ namespace hyperAPI.Migrations
                 name: "IX_UserPRs_UserId",
                 table: "UserPRs",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Warnings_UserId",
+                table: "Warnings",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Warnings_PostId",
+                table: "Warnings",
+                column: "PostId");
         }
 
         /// <inheritdoc />
@@ -211,6 +250,9 @@ namespace hyperAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Warnings");
         }
     }
 }

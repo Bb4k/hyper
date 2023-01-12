@@ -42,8 +42,8 @@
 - [x] de adaugat ID-ul autorului postarii la add-comment
 - [x] de adaugat si comentariile in pending la API ul de cerere de prietenie
 - [x] accept comment API
-- [ ] de adaugat si warnings la API ul de cerere de prietenie
-- [ ] de vazut cu mai multe poze per postare
+- [x] de adaugat si warnings la API ul de cerere de prietenie
+- [x] de vazut cu mai multe poze per postare
 - [ ] inbox pentru mesaje
 
 - [x] Populate database script
