@@ -31,6 +31,21 @@ namespace hyperAPI.Controllers
         [Route("/send-warning")]
         public async Task<ActionResult<List<Warning>>> SendWarning(Warning warning)
         {
+            var dbPost = await _context.Posts.FindAsync(warning.PostId);
+            if (dbPost == null)
+                return BadRequest("Post not found at send warning.");
+
+            dbPost.Deleted = 1;
+
+            if (warning.CommentId != 0)
+            {
+                var dbComment = await _context.Comments.FindAsync(warning.CommentId);
+                if (dbComment == null)
+                    return BadRequest("Comment not found at send warning.");
+
+                dbComment.Deleted = 1;
+            }
+
             _context.Warnings.Add(warning);
             await _context.SaveChangesAsync();
 

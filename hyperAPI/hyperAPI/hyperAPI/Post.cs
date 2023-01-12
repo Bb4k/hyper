@@ -15,6 +15,7 @@ namespace hyperAPI
         [ForeignKey("PrId")]
         [Required]
         public int PrId { get; set; }
+        public int Deleted { get; set; } = 0;
         public string Media1 { get; set; }
         public string Media2 { get; set; }
         public string Media3 { get; set; }

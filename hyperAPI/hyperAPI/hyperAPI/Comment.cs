@@ -15,6 +15,7 @@ namespace hyperAPI
         [ForeignKey("UserId")]
         [Required]
         public int UserId { get; set; }
+        public int Deleted { get; set; } = 0;
         public int AuthorPostId { get; set; }
         public string Text { get; set; }
 
