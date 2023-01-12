@@ -186,6 +186,34 @@ namespace hyperAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    UserFromId = table.Column<int>(type: "int", nullable: false),
+                    UserToId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_UserToId",
+                        column: x => x.UserToId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_UserFromId",
+                        column: x => x.UserFromId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",
                 table: "Comments",
@@ -229,7 +257,17 @@ namespace hyperAPI.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Warnings_PostId",
                 table: "Warnings",
-                column: "PostId");
+                column: "PostId");            
+            
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_UserFromId",
+                table: "Messages",
+                column: "UserFromId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_UserToId",
+                table: "Messages",
+                column: "UserToId");
         }
 
         /// <inheritdoc />
@@ -254,7 +292,10 @@ namespace hyperAPI.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Warnings");
+                name: "Warnings");            
+            
+            migrationBuilder.DropTable(
+                name: "Messages");
         }
     }
 }
