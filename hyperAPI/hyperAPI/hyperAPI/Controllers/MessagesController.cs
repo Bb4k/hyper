@@ -63,6 +63,11 @@ namespace hyperAPI.Controllers
 
             List<Object> conversations = new List<Object>();
 
+            messages.Sort(delegate (Message x, Message y)
+            {
+                return x.Timestamp.CompareTo(y.Timestamp);
+            });
+
             foreach (var message in messages)
             {
                 var conversation = new Dictionary<string, Object>(){
