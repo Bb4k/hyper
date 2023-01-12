@@ -85,16 +85,17 @@ namespace hyperAPI.Controllers
                 if (post == null)
                     return BadRequest("Post not found at warnings.");
 
+                var comment;
                 if (warning.CommentId != 0)
                 {
-                    var comment = await _context.Comments.FindAsync(warning.CommentId);
+                    comment = await _context.Comments.FindAsync(warning.CommentId);
                     if (comment == null)
                         return BadRequest("Comment not found at warnings.");
                 }
 
                 var obj = new Dictionary<string, Object>(){
                     {"id", warning.Id},
-                    {"comment", warning},
+                    {"comment", comment},
                     {"user", user},
                     {"post", post}
                 };
