@@ -91,12 +91,31 @@ namespace hyperAPI.Controllers
         {
             var dbPost = await _context.Posts.FindAsync(id);
             if (dbPost == null)
-                return BadRequest("User not found.");
+                return BadRequest("Post not found.");
 
             _context.Posts.Remove(dbPost);
             await _context.SaveChangesAsync();
 
             return Ok("Post deleted");
+        }
+
+        /*
+        Get post by id
+        */
+        [HttpGet]
+        [Route("/post/{id}")]
+        public async Task<ActionResult<Object>> GetPostById(int id)
+        {
+            var post = await _context.Posts.FindAsync(id);
+            if (post == null)
+                return BadRequest("Post not found.");
+            var comments = await _context.Comments.Where(u => u.PostId == post.Id).ToListAsync();
+
+            var data = new Dictionary<string, Object>(){
+                {"post", post},
+                {"comments", comments.Count}
+            };
+            return Ok(data);
         }
 
     }
