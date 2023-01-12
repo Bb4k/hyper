@@ -110,10 +110,12 @@ namespace hyperAPI.Controllers
             if (post == null)
                 return BadRequest("Post not found.");
             var comments = await _context.Comments.Where(u => u.PostId == post.Id).ToListAsync();
+            var user = await _context.Users.FindAsync(post.UserId);
 
             var data = new Dictionary<string, Object>(){
                 {"post", post},
-                {"comments", comments.Count}
+                {"comments", comments.Count},
+                {"user", user}
             };
             return Ok(data);
         }
