@@ -266,6 +266,43 @@ def populate_comments():
         time.sleep(0.5)
 
 
+def populate_conversations():
+    url_conversation = IP_ADDRESS_LOCALHOST + '/send-message'
+    headers = {'Content-type': 'application/json'}
+    conversations = [
+        {
+            "userFromId": 1,
+            "userToId": 2,
+            "text": "Salut Robert! Ce faci?",
+        },
+        {
+            "userFromId": 2,
+            "userToId": 1,
+            "text": "Salut Dragos! Uite stau...csf",
+        },
+        {
+            "userFromId": 1,
+            "userToId": 2,
+            "text": "Cum merge sala?",
+        },
+        {
+            "userFromId": 1,
+            "userToId": 2,
+            "text": "Cand te duci?",
+        },
+        {
+            "userFromId": 2,
+            "userToId": 1,
+            "text": "Merge bine, am luat o pauza de sarbatori, dar vreau sa revin in forta. As vrea sa revin la programul de 3-4 antrenamente pe saptamana =)",
+        }
+    ]
+    for conversation in conversations:
+        response = requests.post(url_conversation, verify=False, headers=headers,
+                                 data=json.dumps(conversation))
+        print(str(response.status_code) + " Conversation")
+        time.sleep(0.5)
+
+
 while True:
     ip_choice = int(input(
         "Choose the ip address (1 or 2):\n(1) 127.0.0.1\n(2) 192.168.0.111\nYour choice: "))
@@ -280,4 +317,5 @@ while True:
     populate_frindships()
     populate_hype()
     populate_comments()
+    populate_conversations()
     break
