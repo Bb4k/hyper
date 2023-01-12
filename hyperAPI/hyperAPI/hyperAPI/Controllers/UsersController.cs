@@ -252,46 +252,31 @@ namespace hyperAPI.Controllers
         [Route("/user-admin")]
         public async Task<ActionResult<Object>> GetFeedAdmin()
         {
-            var user = await _context.Users.Where(u => u.Role == "admin").FirstOrDefaultAsync();
-            if (user == null)
-                return BadRequest("User not found.");
-
-            // get all friendships for current user
-            var friendships = await _context.Friendships.ToListAsync();
+            var admin = await _context.Users.Where(u => u.Role == "admin").FirstOrDefaultAsync();
+            if (admin == null)
+                return BadRequest("admin not found.");
 
             // create feed
             List<Object> feed = new List<Object>();
 
-            // get all the posts from friends
-            foreach (var friendship in friendships)
+            var posts = await _context.Posts.ToListAsync();
+
+            foreach (var post in posts)
             {
-                var friendId = friendship.User2Id; ;
-                if (friendship.User1Id != user.Id)
-                    friendId = friendship.User1Id;
-
-                var friend = await _context.Users.FindAsync(friendId);
-                if (friend == null)
-                    return BadRequest("Friend not found.");
-
-                var posts = await _context.Posts.Where(u => u.UserId == friendId).ToListAsync();
-
-                foreach (var post in posts)
-                {
-                    var comments = await _context.Comments.Where(u => u.PostId == post.Id).ToListAsync();
-                    var dataForPost = new Dictionary<string, Object>(){
-                        {"user", friend},
-                        {"post", post},
-                        {"comments", comments.Count}
-                    };
-                    feed.Add(dataForPost);
-                }
+                var comments = await _context.Comments.Where(u => u.PostId == post.Id).ToListAsync();
+                var user_post = await _context.Users.FindAsync(post.UserId);
+                var dataForPost = new Dictionary<string, Object>(){
+                    {"user", user_post},
+                    {"post", post},
+                    {"comments", comments.Count}
+                };
+                feed.Add(dataForPost);
             }
 
             feed.Sort(delegate (dynamic x, dynamic y)
             {
                 return y["post"].Timestamp.CompareTo(x["post"].Timestamp);
             });
-
             return Ok(feed);
         }
 
