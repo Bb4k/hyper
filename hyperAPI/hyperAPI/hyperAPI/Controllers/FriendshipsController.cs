@@ -85,7 +85,7 @@ namespace hyperAPI.Controllers
                 if (post == null)
                     return BadRequest("Post not found at warnings.");
 
-                var comment;
+                var comment = new Comment();
                 if (warning.CommentId != 0)
                 {
                     comment = await _context.Comments.FindAsync(warning.CommentId);
