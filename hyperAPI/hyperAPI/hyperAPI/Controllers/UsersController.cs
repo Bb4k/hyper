@@ -169,7 +169,7 @@ namespace hyperAPI.Controllers
             var user = await _context.Users.FindAsync(user_to_view);
             if (user == null)
                 return BadRequest("User not found.");
-            var posts = await _context.Posts.Where(u => u.UserId == user_to_view).ToListAsync();
+            var posts = await _context.Posts.Where(u => u.UserId == user_to_view && u.Deleted == 0).ToListAsync();
             var usersPr = await _context.UserPRs.Where(u => u.UserId == user_to_view).ToListAsync();
             var friendships = await _context.Friendships.Where(u => (u.User2Id == user_to_view || u.User1Id == user_to_view) && u.Status == 1).ToListAsync();
             var currentFriendship = await _context.Friendships.Where(u => (u.User1Id == current_user && u.User2Id == user_to_view) ||
@@ -223,7 +223,7 @@ namespace hyperAPI.Controllers
                 if (friend == null)
                     return BadRequest("Friend not found.");
 
-                var posts = await _context.Posts.Where(u => u.UserId == friendId).ToListAsync();
+                var posts = await _context.Posts.Where(u => u.UserId == friendId && u.Deleted == 0).ToListAsync();
 
                 foreach (var post in posts) {
 
@@ -263,7 +263,7 @@ namespace hyperAPI.Controllers
 
             foreach (var post in posts)
             {
-                var comments = await _context.Comments.Where(u => u.PostId == post.Id).ToListAsync();
+                var comments = await _context.Comments.Where(u => u.PostId == post.Id && u.Deleted == 0).ToListAsync();
                 var user_post = await _context.Users.FindAsync(post.UserId);
                 var dataForPost = new Dictionary<string, Object>(){
                     {"user", user_post},

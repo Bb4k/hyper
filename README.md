@@ -44,7 +44,7 @@
 - [x] accept comment API
 - [x] de adaugat si warnings la API ul de cerere de prietenie
 - [x] de vazut cu mai multe poze per postare
-- [ ] inbox pentru mesaje
+- [x] inbox pentru mesaje
 - [x] Populate database script
 
 
