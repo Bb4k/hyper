@@ -1,56 +1,52 @@
-# hyper
+<div align="center">
+  <img src="assets/hyper-logo.png" alt="Project Logo" width="200px">
+</div>
 
-## APIs
+## <div align="center">Hyper - The Gym-Oriented Social Media Platform 🏋️‍♂️</div>
 
-### GET
-- [x] GET: users
-- [x] GET: user by id
-- [x] GET: feed (postare + nr comentarii + nr hypes)
-- [x] GET: profile + postari + UserPRs + count_friends
-- [x] GET: pr by id
-- [x] GET: comentariile unei postari + profile_pic/username
-- [x] GET: friend requests (poza, username)
-- [x] GET: search friend by username (return name, picture, are_friends)
+[![React Native](https://img.shields.io/badge/React%20Native-v0.64.2-blue.svg)](https://reactnative.dev/)
+[![Django](https://img.shields.io/badge/Django-v3.2.6-green.svg)](https://www.djangoproject.com/)
 
-### POST
-- [x] POST: register (picture, email, username, password, height, weight)
-- [x] POST: login (username, password)
-- [x] POST: send friend request (status: 0:pending; 1:friends)
-- [x] POST: postare 
-- [x] POST: comentariu
-- [x] POST: PR (hardcoded in db, useless for frontend)
-- [x] POST: hype
-- [x] POST: unhype
+Welcome to Hyper, where fitness meets social media! Get ready to take your gym experience to the next level with our specialized platform inspired by Instagram. Share your PRs, connect with fitness enthusiasts, and stay motivated on your fitness journey. Here's what Hyper has to offer:
 
-### PUT
-- [x] PUT: accept friend
-- [x] PUT: update user (picture, email, weight, height)
+📸 **Capture Your PRs, Inspire Others**: Share your personal records (PRs) with captivating descriptions and images. Showcase your achievements and inspire fellow fitness enthusiasts.
 
-### DELETE
-- [x] DELETE: user delete by id
-- [x] DELETE: comentariu
-- [x] DELETE: reject friend
-- [x] DELETE: posts
+<div>
+  <img src="demo/upload.jpeg" alt="login" width="300">
+</div>
 
-### Side tasks
-- [x] adaugat roluri la users (admin, registered, guest)
-- [x] adaugat public/private profile users (private: 0/1)
-- [x] edit api edit profile public/private
-- [x] modificat api user profile sa zica daca sunt prieteni deja sau nu (are_friends: 0 - no, 1 - yes, 2 - pending)
-- [x] crearea conturi admin + guest
-- [x] status de accepted la comentarii
-- [x] de adaugat ID-ul autorului postarii la add-comment
-- [x] de adaugat si comentariile in pending la API ul de cerere de prietenie
-- [x] accept comment API
-- [x] de adaugat si warnings la API ul de cerere de prietenie
-- [x] de vazut cu mai multe poze per postare
-- [x] inbox pentru mesaje
-- [x] Populate database script
+📊 **Track Your Progress**: Keep a record of your gym exercises and PRs. Track your progress, set new goals, and showcase your dedication.
 
+<div>
+  <img src="demo/your-profil.jpeg" alt="login" width="300">
+</div>
 
+🔍 **Discover and Connect**: Find workout buddies, fitness influencers, and like-minded individuals. Expand your fitness network and stay motivated together.
 
+<div>
+  <img src="demo/explore.jpeg" alt="login" width="300">
+  <img src="demo/search-user.jpeg" alt="login" width="300">
+  <img src="demo/friend-comm-req.jpeg" alt="login" width="300">
+</div>
 
+🔒 **Privacy Settings**: Customize your profile's privacy settings. Share your posts with friends-only, creating a supportive and secure fitness community.
 
+<div>
+  <img src="demo/private-acc.jpeg" alt="login" width="300">
+</div>
 
+🙌 **Engage and Interact**: Comment on posts, cheer each other on, and share workout tips. Engage in meaningful conversations and build connections.
 
+<div>
+  <img src="demo/comments.jpeg" alt="login" width="300">
+</div>
 
+🔥 **Personalized Fitness Feed**: Stay updated with the latest PRs and accomplishments from your friends. Get inspired, celebrate victories, and stay motivated.
+
+<div>
+  <img src="demo/feed.jpeg" alt="login" width="300">
+</div>
+
+Join the Hyper revolution and unleash your fitness potential. Start sharing your PRs, connecting with fitness enthusiasts, and embracing a community that shares your passion for fitness.
+
+Get ready to lift, connect, and inspire on Hyper! 🚀
