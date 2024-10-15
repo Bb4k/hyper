@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/hyper-logo.png" alt="Project Logo" width="200px">
+  <img src="demo/hyper-logo.png" alt="Project Logo" width="200px">
 </div>
 
 ## <div align="center">Hyper - The Gym-Oriented Social Media Platform 🏋️‍♂️</div>
